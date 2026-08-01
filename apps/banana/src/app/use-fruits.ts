@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { Fruit, FRUITS } from './fruit';
 
-export function useFruits(ripeness?: Fruit['ripeness']) {
+export function useFruits(status?: Fruit['status']) {
   return useMemo(
-    () => (ripeness ? FRUITS.filter((f) => f.ripeness === ripeness) : FRUITS),
-    [ripeness]
+    () => (status ? FRUITS.filter((f) => f.status === status) : FRUITS),
+    [status]
   );
 }
