@@ -1,8 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo",
+    // Keep tsc output out of `dist`: `vite build` owns that directory and
+    // wipes it before writing. When `nx run-many` runs typecheck and build in
+    // parallel, vite deleting `dist` mid-flight makes tsc lose the declaration
+    // files of its own project references and fail with TS6305.
+    "outDir": "out-tsc/app",
+    "tsBuildInfoFile": "out-tsc/app/tsconfig.app.tsbuildinfo",
     "jsx": "react-jsx",
     "lib": ["dom"],
     "types": [
