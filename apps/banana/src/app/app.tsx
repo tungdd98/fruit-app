@@ -18,7 +18,7 @@ export function App() {
           </Typography>
           {fruits.map((fruit) => (
             <Typography key={fruit.id} variant="body1">
-              {fruit.emoji} {fruit.name} — {fruit.ripeness}
+              {fruit.emoji} {fruit.name} — {fruit.status}
             </Typography>
           ))}
         </Box>
