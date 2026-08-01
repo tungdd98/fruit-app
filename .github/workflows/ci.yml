@@ -1,8 +1,10 @@
 name: CI
 
 on:
+  # No `branches` filter on pull_request: it filters by BASE branch, which
+  # would skip the upper layers of a stacked PR (those target another feature
+  # branch, not main). Every layer has to be checked.
   pull_request:
-    branches: [main]
   push:
     branches: [main]
 
