@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Cancel superseded runs on a PR, but let runs on main finish so the
+# branch always has a definitive status.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Must run before setup-node so that `cache: pnpm` can find pnpm.
+      # The version comes from the `packageManager` field in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Fails with a clear message if the generated TypeScript project
+      # references are stale, instead of a confusing pile of tsc errors.
+      - run: pnpm exec nx sync:check
+
+      # Use `test`, NOT `test-ci`. The `test-ci` target created by the
+      # @nx/vitest plugin is an atomized task that refuses to run without
+      # Nx Cloud. `test` exits after a single run because
+      # apps/banana/vite.config.mts sets `test.watch = false`.
+      - run: pnpm exec nx run-many -t typecheck lint test build
+
+      - run: pnpm exec prettier --check .
