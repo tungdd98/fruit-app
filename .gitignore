@@ -50,3 +50,6 @@ Thumbs.db
 .nx/migrate-runs
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
+
+# local scratch notes, not pushed to remote
+docs/brainstorming/
