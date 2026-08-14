@@ -9,4 +9,5 @@ export const FRUITS: Fruit[] = [
   { id: 'banana', name: 'Banana', emoji: '🍌', status: 'ripe' },
   { id: 'apple', name: 'Apple', emoji: '🍎', status: 'ripe' },
   { id: 'kiwi', name: 'Kiwi', emoji: '🥝', status: 'green' },
+  { id: 'grape', name: 'Grape', emoji: '🍇', status: 'overripe' },
 ];
