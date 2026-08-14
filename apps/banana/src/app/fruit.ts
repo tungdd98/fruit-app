@@ -1,8 +1,18 @@
+export const FRUIT_STATUSES = ['green', 'ripe', 'overripe'] as const;
+
+export type FruitStatus = (typeof FRUIT_STATUSES)[number];
+
+export const STATUS_LABELS: Record<FruitStatus, string> = {
+  green: 'Xanh',
+  ripe: 'Chín',
+  overripe: 'Chín quá',
+};
+
 export interface Fruit {
   id: string;
   name: string;
   emoji: string;
-  status: 'green' | 'ripe' | 'overripe';
+  status: FruitStatus;
 }
 
 export const FRUITS: Fruit[] = [
